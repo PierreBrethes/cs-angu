@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import { NavbarService } from './navbar.service';
 import { FacebookLoginProvider } from 'angular-6-social-login-v2';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { isLContainer } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +17,7 @@ export class NavbarComponent implements OnInit {
   public isCollapsed = true;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
-  isLogged: boolean;
+  isLogged = false;
 
   constructor(
     public location: Location,
@@ -28,7 +29,6 @@ export class NavbarComponent implements OnInit {
   facebookData: User;
 
   ngOnInit() {
-    this.isLogged = false;
     this.router.events.subscribe(event => {
       this.isCollapsed = true;
       if (event instanceof NavigationStart) {
@@ -45,10 +45,15 @@ export class NavbarComponent implements OnInit {
       this.lastPoppedUrl = ev.url;
     });
     this.dataService.currentMessage.subscribe(message => {
-      this.isLogged = true;
-      this.facebookData = message;
+      if (message.id !== '') {
+        this.isLogged = true;
+        this.facebookData = message;
+      }
     });
-    if (!this.facebookData.tokenFbUser) {
+
+    if (localStorage.getItem('token') !== null) {
+      console.log('dans le if');
+
       this.isLogged = true;
       this.navbarservice
         .getMyData(localStorage.getItem('token'))
