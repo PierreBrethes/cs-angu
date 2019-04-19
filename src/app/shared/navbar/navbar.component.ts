@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
   isLogged = false;
+  facebookData: User;
 
   constructor(
     public location: Location,
@@ -25,8 +26,6 @@ export class NavbarComponent implements OnInit {
     private dataService: DataTransitService,
     private navbarservice: NavbarService
   ) {}
-
-  facebookData: User;
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -44,6 +43,15 @@ export class NavbarComponent implements OnInit {
     this.location.subscribe((ev: PopStateEvent) => {
       this.lastPoppedUrl = ev.url;
     });
+
+    this.facebookData = new User('', '', '', '', '');
+    if (this.facebookData.name === '') {
+      this.navbarservice
+        .getMyData(localStorage.getItem('token'))
+        .subscribe(json => {
+          this.facebookData.name = json.name;
+        });
+    }
     this.dataService.currentMessage.subscribe(message => {
       if (message.id !== '') {
         this.isLogged = true;
@@ -52,14 +60,7 @@ export class NavbarComponent implements OnInit {
     });
 
     if (localStorage.getItem('token') !== null) {
-      console.log('dans le if');
-
       this.isLogged = true;
-      this.navbarservice
-        .getMyData(localStorage.getItem('token'))
-        .subscribe(json => {
-          this.facebookData.name = json.name;
-        });
     }
   }
 
