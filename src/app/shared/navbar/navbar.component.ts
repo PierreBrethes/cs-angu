@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
   facebookData: User;
 
   ngOnInit() {
+    this.isLogged = false;
     this.router.events.subscribe(event => {
       this.isCollapsed = true;
       if (event instanceof NavigationStart) {
