@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Location, PopStateEvent } from '@angular/common';
-import { DataTransitService } from 'src/app/login/dataShareComponent/data-transit.service';
+import { DataTransitService } from 'src/app/core/login/dataShareComponent/data-transit.service';
 import { User } from '../models/user';
 import { NavbarService } from './navbar.service';
 import { FacebookLoginProvider } from 'angular-6-social-login-v2';
@@ -9,82 +9,94 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { isLContainer } from '@angular/core/src/render3/util';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  public isCollapsed = true;
-  private lastPoppedUrl: string;
-  private yScrollStack: number[] = [];
-  isLogged = false;
-  facebookData: User;
+    public isCollapsed = true;
+    private lastPoppedUrl: string;
+    private yScrollStack: number[] = [];
+    isLogged = false;
+    facebookData: User;
 
-  constructor(
-    public location: Location,
-    private router: Router,
-    private dataService: DataTransitService,
-    private navbarservice: NavbarService
-  ) {}
+    constructor(
+        public location: Location,
+        private router: Router,
+        private dataService: DataTransitService,
+        private navbarservice: NavbarService
+    ) {}
 
-  ngOnInit() {
-    this.router.events.subscribe(event => {
-      this.isCollapsed = true;
-      if (event instanceof NavigationStart) {
-        if (event.url != this.lastPoppedUrl)
-          this.yScrollStack.push(window.scrollY);
-      } else if (event instanceof NavigationEnd) {
-        if (event.url == this.lastPoppedUrl) {
-          this.lastPoppedUrl = undefined;
-          window.scrollTo(0, this.yScrollStack.pop());
-        } else window.scrollTo(0, 0);
-      }
-    });
-    this.location.subscribe((ev: PopStateEvent) => {
-      this.lastPoppedUrl = ev.url;
-    });
-
-    this.facebookData = new User('', '', '', '', '');
-    if (this.facebookData.name === '') {
-      this.navbarservice
-        .getMyData(localStorage.getItem('token'))
-        .subscribe(json => {
-          this.facebookData.name = json.name;
+    ngOnInit() {
+        this.router.events.subscribe(event => {
+            this.isCollapsed = true;
+            if (event instanceof NavigationStart) {
+                if (event.url != this.lastPoppedUrl)
+                    this.yScrollStack.push(window.scrollY);
+            } else if (event instanceof NavigationEnd) {
+                if (event.url == this.lastPoppedUrl) {
+                    this.lastPoppedUrl = undefined;
+                    window.scrollTo(0, this.yScrollStack.pop());
+                } else window.scrollTo(0, 0);
+            }
         });
-    }
-    this.dataService.currentMessage.subscribe(message => {
-      if (message.id !== '') {
-        this.isLogged = true;
-        this.facebookData = message;
-      }
-    });
+        this.location.subscribe((ev: PopStateEvent) => {
+            this.lastPoppedUrl = ev.url;
+        });
 
-    if (localStorage.getItem('token') !== null) {
-      this.isLogged = true;
-    }
-  }
+        let userToken = localStorage.getItem('token');
 
-  logout() {
-    localStorage.clear();
-    this.isLogged = false;
-    this.router.navigate(['/home']);
-  }
+        this.facebookData = new User('', '', '', '', '');
+        if (this.facebookData.name === '') {
+            this.navbarservice
+                .checkTokenValidity(userToken)
+                .subscribe(result => {
+                    if (result.data.is_valid === true) {
+                        this.navbarservice
+                            .getMyData(userToken)
+                            .subscribe(json => {
+                                this.facebookData.name = json.name;
+                            });
+                    } else {
+                        localStorage.clear();
+                        this.isLogged = false;
+                        this.router.navigate(['/login']);
+                    }
+                });
+        }
+        this.dataService.currentMessage.subscribe(message => {
+            if (message.id !== '') {
+                this.isLogged = true;
+                this.facebookData = message;
+            }
+        });
 
-  isHome() {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
+        if (localStorage.getItem('token') !== null) {
+            this.isLogged = true;
+        }
+    }
 
-    if (titlee === '/home') {
-      return true;
-    } else {
-      return false;
+    logout() {
+        localStorage.clear();
+        this.isLogged = false;
+        this.router.navigate(['/home']);
     }
-  }
-  isDocumentation() {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    if (titlee === '/documentation') {
-      return true;
-    } else {
-      return false;
+
+    isHome() {
+        var titlee = this.location.prepareExternalUrl(this.location.path());
+
+        if (titlee === '/home') {
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
+    isDocumentation() {
+        var titlee = this.location.prepareExternalUrl(this.location.path());
+        if (titlee === '/documentation') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -15,4 +15,8 @@ export class NavbarService {
         '?fields=id,name,email,picture'
     );
   }
+
+  checkTokenValidity(token: string): Observable<any> {
+    return this.http.get('http://localhost:3001/auth/facebook/' + token);
+  }
 }

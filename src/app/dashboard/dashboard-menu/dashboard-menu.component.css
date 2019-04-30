@@ -1,0 +1,17 @@
+.menu-left {
+    position: absolute;
+    top: 85px;
+    left: 0px;
+    width: 200px;
+    height: 110%;
+}
+
+/* .menu-left ul {
+    margin-top: 20px;
+} */
+
+.menu-left li {
+    position: relative;
+    margin-left: 20px;
+    margin-top: 0px;
+}
