@@ -1,6 +1,9 @@
 <div class="row ml-1 mt-1">
     <div class="col-lg-4">
-        <div class="card card-lift--hover shadow border-0">
+        <div
+            *ngFor="let post of feed"
+            class="card card-lift--hover shadow border-0"
+        >
             <div class="card-body py-5">Card insta</div>
         </div>
     </div>

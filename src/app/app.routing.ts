@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -18,13 +18,18 @@ const routes: Routes = [
     { path: 'home', component: HomeComponent },
     {
         path: 'user-profile',
-        component: ProfileComponent
+        component: ProfileComponent,
+        canActivate: [AuthGuardService]
     },
     { path: 'register', component: SignupComponent },
     { path: 'landing', component: LandingComponent },
     { path: 'login', component: LoginComponent },
     { path: 'landing-test', component: LandingTestComponent },
-    { path: 'about-us', component: AboutUsComponent },
+    {
+        path: 'about-us',
+        component: AboutUsComponent,
+        canActivate: [AuthGuardService]
+    },
     { path: 'gcu', component: GCUComponent },
     {
         path: 'dashboard',

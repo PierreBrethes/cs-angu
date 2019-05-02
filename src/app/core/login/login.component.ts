@@ -42,9 +42,21 @@ export class LoginComponent implements OnInit {
                     userData.id,
                     userData.name,
                     userData.email,
-                    userData.image,
-                    userData.token
+                    userData.token,
+                    userData.image
                 );
+
+                this.loginservice
+                    .findOrCreateAPI(
+                        userData.id,
+                        userData.name,
+                        userData.email,
+                        userData.token,
+                        userData.image
+                    )
+                    .subscribe(res => {
+                        localStorage.setItem('userJWT', res.userJWT);
+                    });
 
                 localStorage.setItem('token', userFb.tokenFbUser);
                 localStorage.setItem('userId', userFb.id);

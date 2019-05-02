@@ -33,6 +33,7 @@ import { GCUComponent } from './pages/gcu/gcu.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { DashboardMenuComponent } from './dashboard/dashboard-menu/dashboard-menu.component';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { AuthGuardService } from './services/auth-guard.service';
 
 export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig([
@@ -83,7 +84,8 @@ export function getAuthServiceConfigs() {
             useClass: Interceptor,
             multi: true
         },
-        DataTransitService
+        DataTransitService,
+        AuthGuardService
     ],
     bootstrap: [AppComponent]
 })

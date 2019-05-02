@@ -10,19 +10,18 @@ export class FeedComponent implements OnInit {
     constructor(private feedService: FeedService) {}
     tokenFb: string;
     businessId: string;
+    feed: [];
 
-    feed() {
-        this.tokenFb = localStorage.getItem('token');
-        this.businessId = localStorage.getItem('businessAccount');
-        this.feedService
-            .getFeed(this.businessId, this.tokenFb)
-            .subscribe(result => {
-                console.log('yo', result);
-            });
+    constructFeed(businessId, tokenFb) {
+        this.feedService.getFeed(businessId, tokenFb).subscribe(result => {
+            console.log('yo', result);
+        });
         console.log('yooo');
     }
 
     ngOnInit() {
-        this.feed();
+        this.tokenFb = localStorage.getItem('token');
+        this.businessId = localStorage.getItem('businessAccount');
+        this.constructFeed(this.businessId, this.tokenFb);
     }
 }
