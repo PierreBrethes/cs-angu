@@ -17,18 +17,10 @@ export class DashboardMenuComponent implements OnInit {
         this.dashboardMenuService
             .getUserBusinessAccounts(this.tokenFb)
             .subscribe(result => {
-                result.data.forEach(json => {
-                    if (json.hasOwnProperty('instagram_business_account')) {
-                        let object = {
-                            id: json.instagram_business_account.id,
-                            name: json.name
-                        };
-
-                        this.accountList.push(object);
-                    }
+                result.forEach(json => {
+                    this.accountList.push(json);
                 });
             });
-        console.log(this.accountList);
     }
 
     setBusinessAccount(id: string) {

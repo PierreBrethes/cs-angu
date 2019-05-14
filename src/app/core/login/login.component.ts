@@ -30,8 +30,6 @@ export class LoginComponent implements OnInit {
         let socialPlatformProvider;
         if (socialPlatform == 'facebook') {
             socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-        } else if (socialPlatform == 'google') {
-            socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
         }
 
         this.socialAuthService.signIn(socialPlatformProvider).then(userData => {
@@ -54,12 +52,12 @@ export class LoginComponent implements OnInit {
                         userData.token,
                         userData.image
                     )
-                    .subscribe(res => {
-                        localStorage.setItem('userJWT', res.userJWT);
+                    .subscribe(resp => {
+                        localStorage.setItem('userJWT', resp.body.userJWT);
                     });
 
-                localStorage.setItem('token', userFb.tokenFbUser);
-                localStorage.setItem('userId', userFb.id);
+                localStorage.setItem('token', userData.token);
+                // localStorage.setItem('userId', userFb.id);
                 this.dataservice.sendFbData(userFb);
                 this.router.navigate(['/home']);
             }

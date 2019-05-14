@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Location, PopStateEvent } from '@angular/common';
+import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 
 @Component({
     selector: 'app-dashboard',
@@ -9,7 +11,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class DashboardComponent implements OnInit {
     closeResult: string;
 
-    constructor(private modalService: NgbModal) {}
+    constructor(private modalService: NgbModal, private router: Router) {}
 
     ngOnInit() {}
 }

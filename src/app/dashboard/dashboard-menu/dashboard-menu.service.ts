@@ -9,9 +9,6 @@ export class DashboardMenuService {
     constructor(private http: HttpClient) {}
 
     getUserBusinessAccounts(token: string): Observable<any> {
-        return this.http.get(
-            'https://graph.facebook.com/v3.2/me/accounts?fields=instagram_business_account,name&access_token=' +
-                token
-        );
+        return this.http.get('http://localhost:3001/me/businessAccounts');
     }
 }

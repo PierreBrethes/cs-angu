@@ -30,13 +30,9 @@ export class Interceptor implements HttpInterceptor {
     ): Observable<HttpEvent<any>> {
         req = req.clone({
             setHeaders: {
-                'Content-Type': 'application/json; charset=utf-8',
-                Accept: 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${localStorage.getItem('userJWT')}`
             }
         });
-        console.log('interceptor done');
-
         return next.handle(req);
     }
 }

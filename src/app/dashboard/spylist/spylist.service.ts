@@ -8,6 +8,6 @@ export class SpylistService {
     constructor(private http: HttpClient) {}
 
     getSpiedList() {
-        return this.http.get('http://localhost:3001/feed/');
+        return this.http.get('http://localhost:3001/');
     }
 }

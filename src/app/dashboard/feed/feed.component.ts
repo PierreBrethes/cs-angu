@@ -14,9 +14,9 @@ export class FeedComponent implements OnInit {
 
     constructFeed(businessId, tokenFb) {
         this.feedService.getFeed(businessId, tokenFb).subscribe(result => {
-            console.log('yo', result);
+            // TODO
+            // for each element -> feed.push(element)
         });
-        console.log('yooo');
     }
 
     ngOnInit() {

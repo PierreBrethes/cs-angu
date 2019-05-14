@@ -4,8 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Interceptor } from './shared/models/interceptor';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
@@ -30,8 +29,6 @@ import {
 import { DataTransitService } from './core/login/dataShareComponent/data-transit.service';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { GCUComponent } from './pages/gcu/gcu.component';
-import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
-import { DashboardMenuComponent } from './dashboard/dashboard-menu/dashboard-menu.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthGuardService } from './services/auth-guard.service';
 
@@ -78,11 +75,6 @@ export function getAuthServiceConfigs() {
         {
             provide: AuthServiceConfig,
             useFactory: getAuthServiceConfigs
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: Interceptor,
-            multi: true
         },
         DataTransitService,
         AuthGuardService

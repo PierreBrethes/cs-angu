@@ -44,26 +44,28 @@ export class NavbarComponent implements OnInit {
             this.lastPoppedUrl = ev.url;
         });
 
-        let userToken = localStorage.getItem('token');
-
         this.facebookData = new User('', '', '', '', '');
         if (this.facebookData.name === '') {
-            this.navbarservice
-                .checkTokenValidity(userToken)
-                .subscribe(result => {
-                    if (result.data.is_valid === true) {
-                        this.navbarservice
-                            .getMyData(userToken)
-                            .subscribe(json => {
-                                this.facebookData.name = json.name;
-                            });
-                    } else {
+            try {
+                this.navbarservice.getMyData().subscribe(
+                    json => {
+                        this.facebookData.name = json.name;
+                    },
+                    error => {
                         localStorage.clear();
                         this.isLogged = false;
                         this.router.navigate(['/login']);
                     }
-                });
+                );
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            localStorage.clear();
+            this.isLogged = false;
+            this.router.navigate(['/login']);
         }
+
         this.dataService.currentMessage.subscribe(message => {
             if (message.id !== '') {
                 this.isLogged = true;
@@ -80,23 +82,5 @@ export class NavbarComponent implements OnInit {
         localStorage.clear();
         this.isLogged = false;
         this.router.navigate(['/home']);
-    }
-
-    isHome() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-
-        if (titlee === '/home') {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    isDocumentation() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        if (titlee === '/documentation') {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
