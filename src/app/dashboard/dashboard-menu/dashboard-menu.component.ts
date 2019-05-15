@@ -9,6 +9,7 @@ import { DashboardMenuService } from './dashboard-menu.service';
 export class DashboardMenuComponent implements OnInit {
     tokenFb: string;
     accountList = [];
+    businessActive = false;
 
     constructor(private dashboardMenuService: DashboardMenuService) {}
 
@@ -28,7 +29,9 @@ export class DashboardMenuComponent implements OnInit {
     }
 
     ngOnInit() {
-        localStorage.removeItem('businessAccount');
+        if (localStorage.getItem('businessAccount')) {
+            this.businessActive = true;
+        }
         this.businessAccountList();
     }
 }

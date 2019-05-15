@@ -11,6 +11,7 @@
                 id="customRadio5"
                 type="radio"
                 (click)="setBusinessAccount(item.id)"
+                [checked]="businessActive"
             />
             <label class="custom-control-label" for="customRadio5">{{
                 item.name

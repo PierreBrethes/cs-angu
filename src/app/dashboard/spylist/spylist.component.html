@@ -31,8 +31,11 @@
                 </div>
             </div>
             <div>
-                <ul>
-                    <li *ngFor="let item of spiedAccountList">
+                <ul class="list-group list-group-flush">
+                    <li
+                        *ngFor="let item of spiedAccountList"
+                        class="list-group-item"
+                    >
                         {{ item }}
                     </li>
                 </ul>
