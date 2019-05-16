@@ -1,32 +1,46 @@
 <div class="container mt-4">
-    <app-dashboard-menu></app-dashboard-menu>
     <div class="row justify-content-center text-center mb-lg">
-        <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active">
-            Back to dashboard
-        </a>
+        <a
+            class="nav-link"
+            routerLink="/dashboard/feed"
+            routerLinkActive="active"
+            >Come back to your feed</a
+        >
         <div class="col-lg-12">
-            <h2 class="display-3 text-center">My spylist</h2>
-            <div class="row">
-                <div class="col-md-7">
-                    <div class="form-group">
-                        <input
-                            #spiedaccount
-                            type="name"
-                            class="form-control form-control-alternative"
-                            id="spiedaccount"
-                            placeholder="It must be a business account !"
-                        />
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <input
+                                #spiedaccount
+                                type="name"
+                                class="form-control form-control-alternative"
+                                id="spiedaccount"
+                                placeholder="It must be a business account !"
+                            />
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <button
-                            placeholder="Regular"
-                            class="form-control form-control-alternative"
-                            (click)="addSpiedAccount(spiedaccount.value)"
-                        >
-                            Ajouter
-                        </button>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <button
+                                placeholder="Regular"
+                                class="form-control form-control-alternative"
+                                (click)="addSpiedAccount(spiedaccount.value)"
+                            >
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        [hidden]="!exist"
+                        class="alert alert-danger"
+                        role="alert"
+                    >
+                        <strong>Already in your list !</strong
+                        ><i
+                            (click)="hideAlert()"
+                            class="ni ni-fat-remove align-right"
+                        ></i>
                     </div>
                 </div>
             </div>
@@ -36,7 +50,7 @@
                         *ngFor="let item of spiedAccountList"
                         class="list-group-item"
                     >
-                        {{ item }}
+                        {{ item.accountName }}
                     </li>
                 </ul>
             </div>

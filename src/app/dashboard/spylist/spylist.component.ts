@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SpylistService } from './spylist.service';
+import { DataTransitService } from '../../core/login/dataShareComponent/data-transit.service';
 
 @Component({
     selector: 'app-spylist',
@@ -7,17 +8,48 @@ import { SpylistService } from './spylist.service';
     styleUrls: ['./spylist.component.css']
 })
 export class SpylistComponent implements OnInit {
-    constructor(private spylistService: SpylistService) {}
+    constructor(
+        private spylistService: SpylistService,
+        private dataservice: DataTransitService
+    ) {}
     //
     spiedAccountList = [];
+    businessId = localStorage.getItem('businessAccount');
+    businessMessage = '';
+    exist = false;
 
-    ngOnInit() {
-        this.spylistService.getSpiedList();
+    getSpiedAccounts() {
+        this.spylistService.getSpiedList(this.businessId).subscribe(result => {
+            result.forEach(json => {
+                this.spiedAccountList.push(json);
+            });
+        });
     }
 
-    addSpiedAccount(spiedAccount: string) {
-        if (spiedAccount) {
-            this.spiedAccountList.push(spiedAccount);
-        }
+    ngOnInit() {
+        this.dataservice.currentMessage.subscribe(message => {
+            if (message.id !== '') {
+                this.businessMessage == message.id;
+            }
+        });
+        this.getSpiedAccounts();
+    }
+
+    addSpiedAccount(spiedAccount) {
+        this.spylistService
+            .addSpiedAccount(this.businessId, spiedAccount)
+            .subscribe(result => {
+                if (result.status === 200) {
+                    if (result.body[1] === true) {
+                        this.spiedAccountList.push(result.body[0]);
+                    } else {
+                        this.exist = true;
+                    }
+                }
+            });
+    }
+
+    hideAlert() {
+        this.exist = false;
     }
 }

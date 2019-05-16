@@ -14,6 +14,7 @@ import { GCUComponent } from './pages/gcu/gcu.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { SpylistComponent } from './dashboard/spylist/spylist.component';
+import { FeedComponent } from './dashboard/feed/feed.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -26,7 +27,6 @@ const routes: Routes = [
     { path: 'landing', component: LandingComponent },
     { path: 'login', component: LoginComponent },
     { path: 'landing-test', component: LandingTestComponent },
-    { path: 'spylist', component: SpylistComponent },
     {
         path: 'about-us',
         component: AboutUsComponent,

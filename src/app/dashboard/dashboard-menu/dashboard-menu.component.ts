@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardMenuService } from './dashboard-menu.service';
+import { DataTransitService } from '../../core/login/dataShareComponent/data-transit.service';
 
 @Component({
     selector: 'app-dashboard-menu',
@@ -9,9 +10,12 @@ import { DashboardMenuService } from './dashboard-menu.service';
 export class DashboardMenuComponent implements OnInit {
     tokenFb: string;
     accountList = [];
-    businessActive = false;
+    active = localStorage.getItem('businessAccount');
 
-    constructor(private dashboardMenuService: DashboardMenuService) {}
+    constructor(
+        private dashboardMenuService: DashboardMenuService,
+        private dataservice: DataTransitService
+    ) {}
 
     businessAccountList() {
         this.tokenFb = localStorage.getItem('token');
@@ -25,13 +29,12 @@ export class DashboardMenuComponent implements OnInit {
     }
 
     setBusinessAccount(id: string) {
+        this.active = id;
         localStorage.setItem('businessAccount', id);
+        this.dataservice.reloadSpying(id);
     }
 
     ngOnInit() {
-        if (localStorage.getItem('businessAccount')) {
-            this.businessActive = true;
-        }
         this.businessAccountList();
     }
 }

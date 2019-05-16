@@ -6,7 +6,25 @@ import { DashboardMenuComponent } from './dashboard-menu/dashboard-menu.componen
 import { SpylistComponent } from './spylist/spylist.component';
 import { Interceptor } from '../shared/models/interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+
+const dashboardModuleRoutes: Routes = [
+    {
+        path: 'dashboard', //<---- parent component declared here
+        component: DashboardComponent,
+        children: [
+            //<---- child components declared here
+            {
+                path: 'feed',
+                component: FeedComponent
+            },
+            {
+                path: 'spylist',
+                component: SpylistComponent
+            }
+        ]
+    }
+];
 
 @NgModule({
     declarations: [
@@ -15,13 +33,14 @@ import { RouterModule } from '@angular/router';
         DashboardMenuComponent,
         SpylistComponent
     ],
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule.forChild(dashboardModuleRoutes)],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
             useClass: Interceptor,
             multi: true
         }
-    ]
+    ],
+    exports: [RouterModule]
 })
 export class DashboardModule {}

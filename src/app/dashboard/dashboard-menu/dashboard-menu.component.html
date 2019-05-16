@@ -1,21 +1,18 @@
 <ul class="navbar-nav ml-lg-auto menu-left bg-secondary">
     <li class="nav-item mt-3">
         Accounts :
-        <div
+        <button
+            [ngClass]="
+                active == item.id
+                    ? 'btn btn-default mt-3'
+                    : 'btn mt-3 btn-outline-default'
+            "
             *ngFor="let item of accountList"
-            class="custom-control custom-radio mb-3"
+            (click)="setBusinessAccount(item.id)"
         >
-            <input
-                name="custom-radio-2"
-                class="custom-control-input"
-                id="customRadio5"
-                type="radio"
-                (click)="setBusinessAccount(item.id)"
-                [checked]="businessActive"
-            />
-            <label class="custom-control-label" for="customRadio5">{{
-                item.name
-            }}</label>
-        </div>
+            <div>
+                <label class="">{{ item.name }}</label>
+            </div>
+        </button>
     </li>
 </ul>
