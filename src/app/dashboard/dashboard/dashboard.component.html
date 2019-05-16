@@ -1,9 +1,24 @@
-<div class="container mt-4">
+<div class="container">
     <app-dashboard-menu></app-dashboard-menu>
-    <div class="row justify-content-center text-center mb-lg">
-        <div class="col-lg-12">
-            <h2 class="display-3 text-center">My dashboard</h2>
-            <router-outlet></router-outlet>
+    <div class="row row-grid align-items-center mt-4">
+        <div class="col-lg-12 text-center" [hidden]="!active">
+            <h2 class="display-3">My dashboard</h2>
+            <div class="alert alert-info mt-3" role="alert">
+                You must <strong>select</strong> one of your instagram business
+                account. That we can make your feed with all Instagram Account
+                you want to spy.
+            </div>
+            <h4 class="mt-5">Do you know what is a business account ?</h4>
+            <p class="mt-2">
+                An Instagram business profile is a free feature that Instagram
+                offers to brands that want their accounts to be recognized as
+                businesses. These business profiles offer additional features
+                compared to a personal profile, such as Instagram analytics, ad
+                targeting, a contact button, and more.
+            </p>
+            <img src="../../../assets/img/businessaccount.png" />
+            <p class="mt-5"></p>
         </div>
     </div>
+    <router-outlet></router-outlet>
 </div>

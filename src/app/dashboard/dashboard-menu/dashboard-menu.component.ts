@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardMenuService } from './dashboard-menu.service';
 import { DataTransitService } from '../../core/login/dataShareComponent/data-transit.service';
+import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 
 @Component({
     selector: 'app-dashboard-menu',
@@ -14,7 +15,8 @@ export class DashboardMenuComponent implements OnInit {
 
     constructor(
         private dashboardMenuService: DashboardMenuService,
-        private dataservice: DataTransitService
+        private dataservice: DataTransitService,
+        private router: Router
     ) {}
 
     businessAccountList() {
@@ -32,6 +34,7 @@ export class DashboardMenuComponent implements OnInit {
         this.active = id;
         localStorage.setItem('businessAccount', id);
         this.dataservice.reloadSpying(id);
+        this.router.navigate(['/dashboard/feed']);
     }
 
     ngOnInit() {

@@ -49,6 +49,16 @@ export class SpylistComponent implements OnInit {
             });
     }
 
+    deleteSpiedAccount(i, spiedAccount) {
+        this.spylistService
+            .deleteSpiedAccount(this.businessId, spiedAccount)
+            .subscribe(result => {
+                if (result.status === 200) {
+                    this.spiedAccountList.splice(i, 1);
+                }
+            });
+    }
+
     hideAlert() {
         this.exist = false;
     }

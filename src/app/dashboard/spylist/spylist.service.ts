@@ -39,4 +39,22 @@ export class SpylistService {
             }
         );
     }
+
+    deleteSpiedAccount(businessId, spiedAccountId): Observable<any> {
+        let headers = new HttpHeaders({
+            'Access-Control-Allow-Origin': '*'
+        });
+        headers = headers.set(
+            'Content-Type',
+            'application/x-www-form-urlencoded'
+        );
+
+        return this.http.delete(
+            `http://localhost:3001/me/spying/${businessId}/${spiedAccountId}`,
+            {
+                headers,
+                observe: 'response'
+            }
+        );
+    }
 }

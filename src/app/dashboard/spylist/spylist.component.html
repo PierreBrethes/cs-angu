@@ -44,16 +44,24 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <ul class="list-group list-group-flush">
-                    <li
-                        *ngFor="let item of spiedAccountList"
-                        class="list-group-item"
-                    >
-                        {{ item.accountName }}
-                    </li>
-                </ul>
-            </div>
+            <ul class="list-group list-group-flush">
+                <li
+                    *ngFor="let item of spiedAccountList; let i = index"
+                    class="list-group-item"
+                >
+                    <div class="row">
+                        <div class="text-left col-md-5 pt-2">
+                            {{ item.accountName }}
+                        </div>
+                        <button
+                            class="col-md-3 btn btn-danger"
+                            (click)="deleteSpiedAccount(i, item.id)"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </li>
+            </ul>
         </div>
         <hr />
     </div>

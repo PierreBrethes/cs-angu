@@ -10,8 +10,14 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
     closeResult: string;
+    active = true;
 
     constructor(private modalService: NgbModal, private router: Router) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        if (localStorage.getItem('businessAccount')) {
+            this.active = false;
+            this.router.navigate(['/dashboard/feed']);
+        }
+    }
 }
