@@ -15,11 +15,11 @@ export class SpylistService {
 
     getSpiedList(businessId): Observable<any> {
         return this.http.get(
-            `http://localhost:3001/me/businessAccount/${businessId}/spiedAccounts`
+            `http://localhost:3001/me/business/${businessId}/spying`
         );
     }
 
-    addSpiedAccount(businessId, spiedAccountName): Observable<any> {
+    addSpiedAccount(businessId, accountName): Observable<any> {
         let headers = new HttpHeaders({
             'Access-Control-Allow-Origin': '*'
         });
@@ -28,10 +28,10 @@ export class SpylistService {
             'application/x-www-form-urlencoded'
         );
 
-        const body = new HttpParams().set(`name`, spiedAccountName);
+        const body = new HttpParams().set(`accountName`, accountName);
 
         return this.http.post(
-            `http://localhost:3001/me/spying/${businessId}`,
+            `http://localhost:3001/me/business/${businessId}/spying`,
             body.toString(),
             {
                 headers,
@@ -50,7 +50,7 @@ export class SpylistService {
         );
 
         return this.http.delete(
-            `http://localhost:3001/me/spying/${businessId}/${spiedAccountId}`,
+            `http://localhost:3001/me/business/${businessId}/spying/${spiedAccountId}`,
             {
                 headers,
                 observe: 'response'

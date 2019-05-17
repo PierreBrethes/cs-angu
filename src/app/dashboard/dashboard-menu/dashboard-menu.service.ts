@@ -9,6 +9,6 @@ export class DashboardMenuService {
     constructor(private http: HttpClient) {}
 
     getUserBusinessAccounts(token: string): Observable<any> {
-        return this.http.get('http://localhost:3001/me/businessAccounts');
+        return this.http.get('http://localhost:3001/me/business');
     }
 }

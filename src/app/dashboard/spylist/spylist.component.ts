@@ -53,7 +53,7 @@ export class SpylistComponent implements OnInit {
         this.spylistService
             .deleteSpiedAccount(this.businessId, spiedAccount)
             .subscribe(result => {
-                if (result.status === 200) {
+                if (result.status === 204) {
                     this.spiedAccountList.splice(i, 1);
                 }
             });
