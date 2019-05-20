@@ -19,7 +19,7 @@ const dashboardModuleRoutes: Routes = [
                 component: FeedComponent
             },
             {
-                path: 'spylist',
+                path: 'list',
                 component: SpylistComponent
             }
         ]
