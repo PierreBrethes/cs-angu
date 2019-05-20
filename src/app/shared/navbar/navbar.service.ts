@@ -9,6 +9,6 @@ export class NavbarService {
     constructor(private http: HttpClient) {}
 
     getMyData(): Observable<any> {
-        return this.http.get('http://localhost:3001/me');
+        return this.http.get('https://developers.contentstream.co/me');
     }
 }

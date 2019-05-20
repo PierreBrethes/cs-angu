@@ -15,7 +15,7 @@ export class SpylistService {
 
     getSpiedList(businessId): Observable<any> {
         return this.http.get(
-            `http://localhost:3001/me/business/${businessId}/spying`
+            `https://developers.contentstream.co/me/business/${businessId}/spying`
         );
     }
 
@@ -31,7 +31,7 @@ export class SpylistService {
         const body = new HttpParams().set(`accountName`, accountName);
 
         return this.http.post(
-            `http://localhost:3001/me/business/${businessId}/spying`,
+            `https://developers.contentstream.co/me/business/${businessId}/spying`,
             body.toString(),
             {
                 headers,
@@ -50,7 +50,7 @@ export class SpylistService {
         );
 
         return this.http.delete(
-            `http://localhost:3001/me/business/${businessId}/spying/${spiedAccountId}`,
+            `https://developers.contentstream.co/me/business/${businessId}/spying/${spiedAccountId}`,
             {
                 headers,
                 observe: 'response'

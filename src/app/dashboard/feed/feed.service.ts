@@ -15,6 +15,8 @@ export class FeedService {
     constructor(private http: HttpClient) {}
 
     getFeed(businessId): Observable<any> {
-        return this.http.get('http://localhost:3001/me/feed/' + businessId);
+        return this.http.get(
+            'https://developers.contentstream.co/me/feed/' + businessId
+        );
     }
 }

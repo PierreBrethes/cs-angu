@@ -36,7 +36,7 @@ export class LoginService {
             .set('image', image);
 
         return this.http.post(
-            'http://localhost:3001/auth/login',
+            'https://developers.contentstream.co/auth/login',
             body.toString(),
             {
                 headers,
