@@ -1,16 +1,28 @@
-<div class="row ml-1 mt-1">
-    <a
-        class="nav-link"
-        routerLink="/dashboard/spylist"
-        routerLinkActive="active"
-        >Spylist</a
-    >
-    <div class="col-lg-4">
+<a class="nav-link" routerLink="/dashboard/spylist" routerLinkActive="active"
+    >Analyzed list</a
+>
+<div class="row row row-grid align-items-center ml-1 mt-1">
+    <div class="col-lg-12">
         <div
+            class="card shadow shadow-lg--hover mt-3"
             *ngFor="let post of feed"
-            class="card card-lift--hover shadow border-0"
         >
-            <div class="card-body py-5">Card insta</div>
+            <div class="card-body">
+                <div class="d-flex">
+                    <img class="img" src="{{ post.media_url }}" />
+                </div>
+                <div class="pl-4">
+                    <p class="mt-2">{{ post.caption }}</p>
+                    <p class="">
+                        <i class="ni ni-favourite-28 text-warning"></i>
+                        {{ post.like_count }}
+                    </p>
+                    <p>
+                        <i class="ni ni-chat-round"></i>
+                        {{ post.comments_count }}
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

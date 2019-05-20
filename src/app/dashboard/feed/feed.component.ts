@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FeedService } from './feed.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-feed',
@@ -8,20 +9,20 @@ import { FeedService } from './feed.service';
 })
 export class FeedComponent implements OnInit {
     constructor(private feedService: FeedService) {}
-    tokenFb: string;
     businessId: string;
-    feed: [];
+    feed = [];
 
-    constructFeed(businessId, tokenFb) {
-        this.feedService.getFeed(businessId, tokenFb).subscribe(result => {
-            // TODO
-            // for each element -> feed.push(element)
+    constructFeed(businessId) {
+        this.feedService.getFeed(businessId).subscribe(result => {
+            result.forEach(element => {
+                console.log(element);
+                this.feed.push(element);
+            });
         });
     }
 
     ngOnInit() {
-        this.tokenFb = localStorage.getItem('token');
         this.businessId = localStorage.getItem('businessAccount');
-        this.constructFeed(this.businessId, this.tokenFb);
+        this.constructFeed(this.businessId);
     }
 }

@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {
+    HttpClient,
+    HttpHeaders,
+    HttpParams,
+    HttpResponse
+} from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -8,9 +14,7 @@ import { Observable } from 'rxjs';
 export class FeedService {
     constructor(private http: HttpClient) {}
 
-    getFeed(businessId, token) {
-        return this.http.get(
-            'http://localhost:3001/feed/' + businessId + '/' + token
-        );
+    getFeed(businessId): Observable<any> {
+        return this.http.get('http://localhost:3001/me/feed/' + businessId);
     }
 }
